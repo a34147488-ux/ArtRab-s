@@ -1,79 +1,54 @@
-// =====================
-// ArtRabs Game Engine
-// =====================
+// ==========================
+// ArtRabs Core System v2
+// ==========================
 
 
-// Балансы
+// Данные игрока
 
 let multiStars =
 Number(localStorage.getItem("multiStars")) || 0;
 
 
-let stars =
-Number(localStorage.getItem("stars")) || 0;
+let level =
+Number(localStorage.getItem("level")) || 1;
+
+
+let workers =
+Number(localStorage.getItem("workers")) || 0;
 
 
 
-let workerLevel =
-Number(localStorage.getItem("workerLevel")) || 1;
+// Сила клика
+
+function clickPower(){
+
+    return level;
+
+}
 
 
 
-let refs =
-Number(localStorage.getItem("refs")) || 0;
-
-
-
-let refMoney =
-Number(localStorage.getItem("refMoney")) || 0;
-
-
-
-
-
-// Обновление данных
+// Обновление интерфейса
 
 function update(){
 
-
-document.getElementById("multi").innerHTML =
-multiStars;
-
-
-document.getElementById("stars").innerHTML =
-stars;
+    document.getElementById("balance").innerHTML =
+    multiStars;
 
 
-
-document.getElementById("profileMulti").innerHTML =
-multiStars;
-
-
-document.getElementById("profileStars").innerHTML =
-stars;
+    document.getElementById("level").innerHTML =
+    level;
 
 
-
-document.getElementById("workerLevel").innerHTML =
-workerLevel;
-
-
-document.getElementById("workerIncome").innerHTML =
-workerLevel * 40;
+    document.getElementById("workers").innerHTML =
+    workers;
 
 
-
-document.getElementById("refsCount").innerHTML =
-refs;
-
-
-document.getElementById("refMoney").innerHTML =
-refMoney;
+    document.getElementById("income").innerHTML =
+    workers * level * 50 + "/week";
 
 
-
-save();
-
+    save();
 
 }
 
@@ -82,62 +57,57 @@ save();
 
 function save(){
 
-
-localStorage.setItem(
-"multiStars",
-multiStars
-);
-
-
-localStorage.setItem(
-"stars",
-stars
-);
+    localStorage.setItem(
+        "multiStars",
+        multiStars
+    );
 
 
-localStorage.setItem(
-"workerLevel",
-workerLevel
-);
+    localStorage.setItem(
+        "level",
+        level
+    );
 
 
-localStorage.setItem(
-"refs",
-refs
-);
-
-
-localStorage.setItem(
-"refMoney",
-refMoney
-);
-
+    localStorage.setItem(
+        "workers",
+        workers
+    );
 
 }
 
 
 
 
+// ==========================
+// КЛИК ПО ЯДРУ
+// ==========================
+
+
+const core =
+document.getElementById("clicker");
 
 
 
-// =====================
-// КЛИКЕР
-// =====================
+core.onclick = function(){
 
 
-document
-.getElementById("clickBtn")
-.onclick = function(){
+    let gain =
+    clickPower();
 
 
-multiStars++;
+
+    multiStars += gain;
 
 
-update();
+
+    update();
 
 
-popup("+1 Multi ⭐");
+
+    showGain(
+        "+" + gain
+    );
 
 
 };
@@ -147,305 +117,180 @@ popup("+1 Multi ⭐");
 
 
 
-
-// =====================
-// РУЛЕТКА
-// =====================
-
-
-document
-.getElementById("wheelBtn")
-.onclick = function(){
+// ==========================
+// Анимация получения
+// ==========================
 
 
-let reward =
-Math.floor(Math.random()*6);
+function showGain(text){
+
+
+    let gain =
+    document.getElementById("gain");
+
+
+    gain.innerHTML =
+    text;
+
+
+    gain.classList.remove(
+        "gain-animation"
+    );
+
+
+    void gain.offsetWidth;
+
+
+    gain.classList.add(
+        "gain-animation"
+    );
+
+
+}
 
 
 
-stars += reward;
 
+
+
+
+// ==========================
+// УРОВЕНЬ
+// ==========================
+
+
+function upgrade(){
+
+
+    let price =
+    level * 1000;
+
+
+
+    if(multiStars >= price){
+
+
+        multiStars -= price;
+
+
+        level++;
+
+
+        update();
+
+
+    }
+
+
+}
+
+
+
+
+
+
+// ==========================
+// ДОБАВЛЕНИЕ РАБОТНИКОВ
+// ==========================
+
+
+function buyWorker(){
+
+
+    let price =
+    5000;
+
+
+
+    if(multiStars >= price){
+
+
+        multiStars -= price;
+
+
+        workers++;
+
+
+        update();
+
+
+    }
+
+
+}
+
+
+
+
+
+
+// ==========================
+// ЕЖЕДНЕВНЫЙ БОНУС
+// ==========================
+
+
+let lastBonus =
+Number(localStorage.getItem("bonusTime")) || 0;
+
+
+
+function dailyBonus(){
+
+
+    let now =
+    Date.now();
+
+
+
+    let day =
+    86400000;
+
+
+
+    if(now-lastBonus >= day){
+
+
+        multiStars += 500;
+
+
+
+        localStorage.setItem(
+            "bonusTime",
+            now
+        );
+
+
+        update();
+
+
+        alert(
+        "Daily reward +500 MULTI"
+        );
+
+
+    }
+
+    else{
+
+
+        alert(
+        "Бонус уже получен"
+        );
+
+
+    }
+
+
+}
+
+
+
+
+
+
+// ==========================
+// ЗАПУСК
+// ==========================
 
 
 update();
-
-
-
-alert(
-"🎁 Рулетка\n\nПолучено: "
-+
-reward
-+
-" ⭐"
-);
-
-
-
-};
-
-
-
-
-
-
-
-
-
-// =====================
-// ПЕРЕКЛЮЧЕНИЕ МЕНЮ
-// =====================
-
-
-function openPage(page){
-
-
-let pages =
-document.querySelectorAll(".page");
-
-
-
-pages.forEach(function(item){
-
-item.style.display="none";
-
-});
-
-
-
-document.getElementById(page)
-.style.display="block";
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================
-// РАБОТНИК
-// =====================
-
-
-function upgradeWorker(){
-
-
-if(workerLevel >= 50){
-
-
-alert(
-"Максимальный уровень"
-);
-
-
-return;
-
-}
-
-
-
-let price =
-workerLevel * 500;
-
-
-
-if(multiStars < price){
-
-
-alert(
-"Нужно "
-+
-price
-+
-" Multi"
-);
-
-
-return;
-
-
-}
-
-
-
-multiStars -= price;
-
-
-workerLevel++;
-
-
-update();
-
-
-alert(
-"Работник улучшен!\nУровень "
-+
-workerLevel
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================
-// РЕФЕРАЛЫ
-// =====================
-
-
-function invite(){
-
-
-let link =
-window.location.href
-+
-"?ref="
-+
-Date.now();
-
-
-
-alert(
-"Твоя ссылка ArtRabs:\n\n"
-+
-link
-);
-
-
-}
-
-
-
-
-
-
-
-
-
-// =====================
-// ОБМЕН
-// =====================
-
-
-function exchange(){
-
-
-
-if(multiStars < 1000){
-
-
-alert(
-"Минимум 1000 Multi"
-);
-
-
-return;
-
-
-}
-
-
-
-
-let result =
-Math.floor(
-multiStars / 4000
-);
-
-
-
-stars += result;
-
-
-multiStars = 0;
-
-
-
-update();
-
-
-
-alert(
-"Получено ⭐ "
-+
-result
-);
-
-
-}
-
-
-
-
-
-
-
-
-// =====================
-// ВСПЛЫВАЮЩАЯ НАГРАДА
-// =====================
-
-
-function popup(text){
-
-
-let p =
-document.createElement("div");
-
-
-
-p.innerHTML=text;
-
-
-p.style.position="fixed";
-
-p.style.top="40%";
-
-p.style.left="50%";
-
-p.style.transform=
-"translate(-50%,-50%)";
-
-
-p.style.fontSize="30px";
-
-p.style.color="#FFD700";
-
-p.style.fontWeight="bold";
-
-
-document.body.appendChild(p);
-
-
-
-setTimeout(()=>{
-
-p.remove();
-
-},800);
-
-
-
-}
-
-
-
-
-
-
-// Запуск
-
-
-update();
-
-openPage("home");
