@@ -1,313 +1,101 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>ArtRabs</title>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
-
 
 <body>
 
-
-<div class="app">
-
+<div class="particles"></div>
 
 <header>
+    <div class="logo">
+        ARTRABS
+        <span>CORE SYSTEM</span>
+    </div>
 
-<h1>
-ArtRabs
-</h1>
-
+    <div class="balance-box">
+        <div class="balance" id="balance">0</div>
+        <small>MULTI STARS</small>
+    </div>
 </header>
 
 
+<main>
 
-<section class="balance">
+<section class="core-area">
 
+<div class="energy-ring"></div>
+
+<button class="core" id="clicker">
+    <div class="core-inner">
+        <span>ART</span>
+        <strong>CORE</strong>
+    </div>
+</button>
+
+<div id="gain"></div>
+
+<p class="hint">
+Нажимайте для добычи энергии
+</p>
+
+</section>
+
+
+
+<section class="stats">
 
 <div class="card">
-
-⭐ Stars
-
-<span id="stars">
-0
-</span>
-
+<h3>WORKERS</h3>
+<p id="workers">0</p>
 </div>
-
 
 <div class="card">
-
-🟣 Multi Stars
-
-<span id="multi">
-0
-</span>
-
+<h3>LEVEL</h3>
+<p id="level">1</p>
 </div>
 
+<div class="card">
+<h3>INCOME</h3>
+<p id="income">0/week</p>
+</div>
 
 </section>
 
 
+</main>
 
 
+<nav>
 
-<div id="home" class="page">
-
-
-<section class="clicker">
-
-
-<div class="worker-image">
-👷
-</div>
-
-
-<h2>
-Рабочий
-</h2>
-
-
-<button id="clickBtn">
-
-КЛИКНУТЬ
-
+<button>
+CORE
 </button>
 
-
-<p>
-+1 Multi Star за действие
-</p>
-
-
-</section>
-
-
-
-<section class="bonus">
-
-
-<h3>
-Ежедневная рулетка
-</h3>
-
-
-<button id="wheelBtn">
-
-Крутить
-
+<button>
+WORKERS
 </button>
 
-
-</section>
-
-
-</div>
-
-
-
-
-
-<div id="workers" class="page">
-
-
-<h2>
-👷 Работники
-</h2>
-
-
-<div class="worker-card">
-
-
-Работник №1
-
-<br><br>
-
-
-Уровень:
-
-<span id="workerLevel">
-1
-</span>
-
-/50
-
-
-<br><br>
-
-
-Доход:
-
-<span id="workerIncome">
-40
-</span>
-
-Multi / неделю
-
-
-<button onclick="upgradeWorker()">
-
-Прокачать
-
+<button>
+CASES
 </button>
 
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div id="refs" class="page">
-
-
-<h2>
-Работники АртRabs
-</h2>
-
-
-<p>
-Приглашено:
-<span id="refsCount">0</span>
-</p>
-
-
-<p>
-Заработано:
-<span id="refMoney">0</span>
-Multi
-</p>
-
-
-<button onclick="invite()">
-
-Получить ссылку
-
+<button>
+RANK
 </button>
 
-
-</div>
-
-
-
-
-
-
-
-<div id="exchange" class="page">
-
-
-<h2>
-Обмен
-</h2>
-
-
-<p>
-
-1000 Multi Stars = 0.25 ⭐
-
-</p>
-
-
-<button onclick="exchange()">
-
-Обменять
-
+<button>
+PROFILE
 </button>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div id="profile" class="page">
-
-
-<h2>
-Профиль
-</h2>
-
-
-<p>
-Multi Stars:
-<span id="profileMulti">
-0
-</span>
-</p>
-
-
-<p>
-Stars:
-<span id="profileStars">
-0
-</span>
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<nav class="menu">
-
-
-<button onclick="openPage('home')">
-Главная
-</button>
-
-
-<button onclick="openPage('workers')">
-Работники
-</button>
-
-
-<button onclick="openPage('refs')">
-Рефы
-</button>
-
-
-<button onclick="openPage('exchange')">
-Обмен
-</button>
-
-
-<button onclick="openPage('profile')">
-Профиль
-</button>
-
 
 </nav>
 
 
-</div>
-
-
 <script src="script.js"></script>
 
-
 </body>
-
 </html>
